@@ -5,35 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOP TEC</title>
     <style>
-        /* Default styles for horizontal (landscape) screens */
+        /* Reset body margin and padding to ensure full coverage */
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
-        }
-
-        .responsive-image {
-            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             height: 100vh;
-            object-fit: cover;
+            width: 100vw;
+            background-color: black; /* Background color to fill empty space */
         }
 
-        /* When the screen is in portrait mode, show the vertical image */
+        /* Style for the image */
+        .responsive-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensure the entire image is shown without cropping */
+        }
+
+        /* Style for the download button */
+        .download-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #218838;
+        }
+
+        /* When the screen is in portrait mode, switch to vertical image */
         @media (orientation: portrait) {
             .responsive-image {
                 content: url('vertical.png');
             }
         }
 
-        /* When the screen is in landscape mode, show the horizontal image */
+        /* When the screen is in landscape mode, switch to horizontal image */
         @media (orientation: landscape) {
             .responsive-image {
-                content: url('top_tec.jpg');
+                content: url('horizontal.png');
             }
         }
     </style>
 </head>
 <body>
-    <img src="top_tec.jpg" alt="My Artwork" class="responsive-image">
+    <img src="horizontal.png" alt="My Artwork" id="artwork" class="responsive-image">
+    <a id="downloadLink" download="artwork.png">
+        <button class="download-btn">Download Image</button>
+    </a>
+
+    <script>
+        function updateImage() {
+            const img = document.getElementById('artwork');
+            const downloadLink = document.getElementById('downloadLink');
+
+            if (window.innerHeight > window.innerWidth) {
+                img.src = 'vertical.png';
+                downloadLink.href = 'vertical.png';
+                downloadLink.setAttribute('download', 'vertical.png');
+            } else {
+                img.src = 'horizontal.png';
+                downloadLink.href = 'horizontal.png';
+                downloadLink.setAttribute('download', 'horizontal.png');
+            }
+        }
+
+        // Update image on page load and resize
+        window.addEventListener('resize', updateImage);
+        window.addEventListener('load', updateImage);
+    </script>
 </body>
 </html>
