@@ -5,29 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOP TEC</title>
     <style>
-        /* Reset margins and padding to ensure full coverage */
+        /* Reset margin and padding to ensure full coverage */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
             overflow: hidden;
+            background-color: black; /* Background color to fill empty space */
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: black; /* Background color to fill empty space */
         }
 
-        /* Image style to always fit within the screen without cropping */
+        /* Image styling to fit screen without cropping */
         #artwork {
-            max-width: 100vw;
-            max-height: 100vh;
-            width: auto;
-            height: auto;
+            width: 100vw;
+            height: 100vh;
             object-fit: contain;
         }
 
-        /* Download button styling */
+        /* Download button positioned at top right */
         .download-btn {
             position: absolute;
             top: 20px;
@@ -54,30 +52,29 @@
     </a>
 
     <script>
-        // Function to check and update the displayed artwork based on orientation
         function updateArtwork() {
             const img = document.getElementById('artwork');
             const downloadLink = document.getElementById('downloadLink');
 
-            // Detect if the device is inherently vertical (mobile/tablet) or horizontal (desktop/laptop)
-            const isPortraitDevice = window.matchMedia("(max-width: 768px)").matches;
-
-            if (window.innerHeight > window.innerWidth || isPortraitDevice) {
-                // Portrait mode (mobile/tablet)
+            // Determine if the screen is in portrait or landscape mode
+            if (window.matchMedia("(orientation: portrait)").matches) {
+                // Portrait mode: Load vertical image
                 img.src = 'vertical.png';
                 downloadLink.href = 'vertical.png';
                 downloadLink.setAttribute('download', 'vertical.png');
             } else {
-                // Landscape mode (laptop/desktop)
+                // Landscape mode: Load horizontal image
                 img.src = 'horizontal.png';
                 downloadLink.href = 'horizontal.png';
                 downloadLink.setAttribute('download', 'horizontal.png');
             }
         }
 
-        // Update image on page load and screen resize or orientation change
-        window.addEventListener('resize', updateArtwork);
+        // Initial check when the page loads
         window.addEventListener('load', updateArtwork);
+
+        // Handle screen orientation changes and window resizing
+        window.addEventListener('resize', updateArtwork);
         window.addEventListener('orientationchange', updateArtwork);
     </script>
 </body>
