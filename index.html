@@ -18,11 +18,13 @@
             align-items: center;
         }
 
-        /* Image styling to fit screen without cropping */
+        /* Image styling to fit within the screen without cropping */
         #artwork {
-            width: 100vw;
-            height: 100vh;
-            object-fit: contain;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Ensures the whole image is visible without cropping */
         }
 
         /* Download button positioned at top right */
@@ -56,14 +58,14 @@
             const img = document.getElementById('artwork');
             const downloadLink = document.getElementById('downloadLink');
 
-            // Determine if the screen is in portrait or landscape mode
+            // Check orientation to select the right image
             if (window.matchMedia("(orientation: portrait)").matches) {
-                // Portrait mode: Load vertical image
+                // Portrait mode (mobile/tablet)
                 img.src = 'vertical.png';
                 downloadLink.href = 'vertical.png';
                 downloadLink.setAttribute('download', 'vertical.png');
             } else {
-                // Landscape mode: Load horizontal image
+                // Landscape mode (laptop/desktop)
                 img.src = 'horizontal.png';
                 downloadLink.href = 'horizontal.png';
                 downloadLink.setAttribute('download', 'horizontal.png');
@@ -73,7 +75,7 @@
         // Initial check when the page loads
         window.addEventListener('load', updateArtwork);
 
-        // Handle screen orientation changes and window resizing
+        // Handle screen orientation changes and resizing
         window.addEventListener('resize', updateArtwork);
         window.addEventListener('orientationchange', updateArtwork);
     </script>
