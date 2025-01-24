@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOP TEC</title>
     <style>
-        /* Reset margin and padding to ensure full coverage */
+        /* Reset margins and padding to ensure full coverage */
         body, html {
             margin: 0;
             padding: 0;
@@ -15,25 +15,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: black; /* Background to fill empty spaces */
+            background-color: black; /* Background color to fill empty space */
         }
 
-        /* Style for the image to fully fit the screen without cropping */
-        .responsive-image {
+        /* Image style to always fit within the screen without cropping */
+        #artwork {
             max-width: 100vw;
             max-height: 100vh;
             width: auto;
             height: auto;
             object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
         }
 
-        /* Style for the download button in the top-right corner */
+        /* Download button styling */
         .download-btn {
             position: absolute;
             top: 20px;
@@ -51,55 +45,40 @@
         .download-btn:hover {
             background-color: #218838;
         }
-
-        /* When the screen is in portrait mode, show the vertical image */
-        @media (orientation: portrait) {
-            .responsive-image {
-                content: url('vertical_2.jpg');
-            }
-            #downloadLink {
-                href: 'vertical_2.jpg';
-                download: 'vertical_2.jpg';
-            }
-        }
-
-        /* When the screen is in landscape mode, show the horizontal image */
-        @media (orientation: landscape) {
-            .responsive-image {
-                content: url('horizontal.png');
-            }
-            #downloadLink {
-                href: 'horizontal.png';
-                download: 'horizontal.png';
-            }
-        }
     </style>
 </head>
 <body>
-    <img src="horizontal.png" alt="My Artwork" id="artwork" class="responsive-image">
+    <img id="artwork" src="horizontal.png" alt="My Artwork">
     <a id="downloadLink" href="horizontal.png" download="horizontal.png">
         <button class="download-btn">Download Image</button>
     </a>
 
     <script>
-        function updateImage() {
+        // Function to check and update the displayed artwork based on orientation
+        function updateArtwork() {
             const img = document.getElementById('artwork');
             const downloadLink = document.getElementById('downloadLink');
 
-            if (window.innerHeight > window.innerWidth) {
-                img.src = 'vertical_2.jpg';
-                downloadLink.href = 'vertical_2.jpg';
-                downloadLink.setAttribute('download', 'vertical_2.jpg');
+            // Detect if the device is inherently vertical (mobile/tablet) or horizontal (desktop/laptop)
+            const isPortraitDevice = window.matchMedia("(max-width: 768px)").matches;
+
+            if (window.innerHeight > window.innerWidth || isPortraitDevice) {
+                // Portrait mode (mobile/tablet)
+                img.src = 'vertical.png';
+                downloadLink.href = 'vertical.png';
+                downloadLink.setAttribute('download', 'vertical.png');
             } else {
+                // Landscape mode (laptop/desktop)
                 img.src = 'horizontal.png';
                 downloadLink.href = 'horizontal.png';
                 downloadLink.setAttribute('download', 'horizontal.png');
             }
         }
 
-        // Update image on page load and resize
-        window.addEventListener('resize', updateImage);
-        window.addEventListener('load', updateImage);
+        // Update image on page load and screen resize or orientation change
+        window.addEventListener('resize', updateArtwork);
+        window.addEventListener('load', updateArtwork);
+        window.addEventListener('orientationchange', updateArtwork);
     </script>
 </body>
 </html>
