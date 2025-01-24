@@ -55,11 +55,11 @@
         /* When the screen is in portrait mode, show the vertical image */
         @media (orientation: portrait) {
             .responsive-image {
-                content: url('vertical.png');
+                content: url('vertical_2.jpg');
             }
             #downloadLink {
-                href: 'vertical.png';
-                download: 'vertical.png';
+                href: 'vertical_2.jpg';
+                download: 'vertical_2.jpg';
             }
         }
 
@@ -87,9 +87,9 @@
             const downloadLink = document.getElementById('downloadLink');
 
             if (window.innerHeight > window.innerWidth) {
-                img.src = 'vertical.png';
-                downloadLink.href = 'vertical.png';
-                downloadLink.setAttribute('download', 'vertical.png');
+                img.src = 'vertical_2.jpg';
+                downloadLink.href = 'vertical_2.jpg';
+                downloadLink.setAttribute('download', 'vertical_2.jpg');
             } else {
                 img.src = 'horizontal.png';
                 downloadLink.href = 'horizontal.png';
